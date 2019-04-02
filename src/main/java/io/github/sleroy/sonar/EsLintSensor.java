@@ -29,7 +29,7 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
-import org.sonar.api.config.Configuration;
+import org.sonar.api.config.Settings;
 import org.sonar.api.rule.RuleKey;
 
 import io.github.sleroy.sonar.api.EsLintExecutor;
@@ -40,12 +40,12 @@ import io.github.sleroy.sonar.model.EsLintIssue;
 public class EsLintSensor implements Sensor {
     private static final Logger LOG = LoggerFactory.getLogger(EsLintSensor.class);
 
-    private final Configuration	 settings;
+    private final Settings	 settings;
     private final PathResolver	 resolver;
     private final EsLintExecutor executor;
     private final EsLintParser	 parser;
 
-    public EsLintSensor(final Configuration settings, final PathResolver resolver, final EsLintExecutor executor,
+    public EsLintSensor(final Settings settings, final PathResolver resolver, final EsLintExecutor executor,
 	    final EsLintParser parser) {
 	this.settings = settings;
 	this.resolver = resolver;
@@ -88,10 +88,10 @@ public class EsLintSensor implements Sensor {
 
     @Override
     public void execute(final SensorContext ctx) {
-	if (!settings.getBoolean(EsLintPlugin.SETTING_ES_LINT_ENABLED).orElse(Boolean.FALSE)) {
-	    LOG.debug("Skipping eslint execution - {} set to false", EsLintPlugin.SETTING_ES_LINT_ENABLED);
-	    return;
-	}
+			if (!settings.getBoolean(EsLintPlugin.SETTING_ES_LINT_ENABLED)) {
+			    LOG.debug("Skipping eslint execution - {} set to false", EsLintPlugin.SETTING_ES_LINT_ENABLED);
+			    return;
+			}
 
 	final EsLintExecutorConfig config = EsLintExecutorConfigFactory.fromSettings(ctx, resolver);
 

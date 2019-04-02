@@ -23,9 +23,10 @@ import io.github.sleroy.sonar.api.PathResolver;
 public class EsLintExecutorConfigFactory {
 
     private static int evaluateTimeoutSetting(final SensorContext ctx) {
-	return Math.max(
-		EsLintExecutorConfig.MAX_TIMEOUT,
-		ctx.config().getInt(EsLintPlugin.SETTING_ES_LINT_TIMEOUT).orElse(EsLintExecutorConfig.MAX_TIMEOUT));
+			return Math.max(
+				EsLintExecutorConfig.MAX_TIMEOUT,
+				ctx.settings().getInt(EsLintPlugin.SETTING_ES_LINT_TIMEOUT)
+			);
     }
 
     /**

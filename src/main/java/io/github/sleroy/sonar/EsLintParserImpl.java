@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.batch.BatchSide;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,7 +31,7 @@ import io.github.sleroy.sonar.api.EsLintParser;
 import io.github.sleroy.sonar.model.EsLintFile;
 import io.github.sleroy.sonar.model.EsLintIssue;
 
-@ScannerSide
+@BatchSide
 public class EsLintParserImpl implements EsLintParser {
     private static final Logger	 LOG		 = LoggerFactory.getLogger(EsLintParserImpl.class);
     private static final Pattern REPLACE_PATTERN = Pattern.compile("\\]\\[");

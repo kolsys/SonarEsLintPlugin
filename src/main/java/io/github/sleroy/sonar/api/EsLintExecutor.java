@@ -11,11 +11,10 @@ package io.github.sleroy.sonar.api;
 
 import java.util.List;
 
-import org.sonar.api.batch.ScannerSide;
-
+import org.sonar.api.batch.BatchSide;
 import io.github.sleroy.sonar.EsLintExecutorConfig;
 
-@ScannerSide
+@BatchSide
 public interface EsLintExecutor {
     List<String> execute(EsLintExecutorConfig config, List<String> files);
 }

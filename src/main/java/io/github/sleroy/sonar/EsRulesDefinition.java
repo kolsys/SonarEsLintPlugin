@@ -20,7 +20,7 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.config.Configuration;
+import org.sonar.api.config.Settings;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.rules.RuleType;
@@ -148,7 +148,7 @@ public class EsRulesDefinition implements RulesDefinition {
 	sonarRule.setType(type);
     }
 
-    private final Configuration settings;
+    private final Settings settings;
 
     private final List<EsLintRule> eslintCoreRules = new ArrayList<>(100);
 
@@ -158,7 +158,7 @@ public class EsRulesDefinition implements RulesDefinition {
 	this(null);
     }
 
-    public EsRulesDefinition(Configuration settings) {
+    public EsRulesDefinition(Settings settings) {
 
 	this.settings = settings;
 
@@ -200,18 +200,21 @@ public class EsRulesDefinition implements RulesDefinition {
     }
 
     private void loadCustomRules() {
-	if (settings == null) {
-	    return;
-	}
+			if (settings == null) {
+			    return;
+			}
 
-	final String[] configKeys = settings.getStringArray(EsLintPlugin.SETTING_ES_RULE_CONFIGS);
+			List<String> configKeys = settings.getKeysStartingWith(EsLintPlugin.SETTING_ES_RULE_CONFIGS);
+        for (String cfgKey : configKeys) {
+            if (!cfgKey.endsWith("config")) {
+                continue;
+						}
 
-	for (final String cfgKey : configKeys) {
-	    final Optional<String> rulesConfig = settings.get(cfgKey);
-	    if (rulesConfig.isPresent()) {
-		final InputStream rulesConfigStream = new ByteArrayInputStream(rulesConfig.get().getBytes(Charset.defaultCharset()));
-		EsRulesDefinition.loadRules(rulesConfigStream, eslintRules);
-	    }
-	}
+            String rulesConfig = settings.getString(cfgKey);
+            if (rulesConfig != null) {
+                InputStream rulesConfigStream = new ByteArrayInputStream(rulesConfig.getBytes(Charset.defaultCharset()));
+                EsRulesDefinition.loadRules(rulesConfigStream, eslintRules);
+            }
+        }
     }
 }

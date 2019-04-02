@@ -75,7 +75,7 @@ public class PathResolverImpl implements PathResolver {
     @Override
     public Optional<String> getPathFromSetting(SensorContext context, String settingKey) {
 	// Prefer the specified path
-	final String propertyValue = context.config().get(settingKey).orElse("");
+	final String propertyValue = context.settings().getString(settingKey);
 
 	// Fall back to a file system search if null or doesn't exist
 	if (propertyValue == null || propertyValue.isEmpty()) {

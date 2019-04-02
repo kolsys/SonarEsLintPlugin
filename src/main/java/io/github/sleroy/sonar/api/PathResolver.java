@@ -11,10 +11,10 @@ package io.github.sleroy.sonar.api;
 
 import java.util.Optional;
 
-import org.sonar.api.batch.ScannerSide;
+import org.sonar.api.batch.BatchSide;
 import org.sonar.api.batch.sensor.SensorContext;
 
-@ScannerSide
+@BatchSide
 public interface PathResolver {
     /**
      * Computes the absolute path of a resource from a string obtained from

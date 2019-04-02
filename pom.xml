@@ -50,7 +50,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<sonar.buildVersion>6.7.3</sonar.buildVersion>
+		<sonar.buildVersion>5.6</sonar.buildVersion>
 		<jdk.min.version>1.8</jdk.min.version>
 		<sslr.version>1.22</sslr.version>
 	</properties>
@@ -178,7 +178,7 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<!-- UTF-8 bundles are not supported by Java, so they must be converted 
+				<!-- UTF-8 bundles are not supported by Java, so they must be converted
 					during build -->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>native2ascii-maven-plugin</artifactId>

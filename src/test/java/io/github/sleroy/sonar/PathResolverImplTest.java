@@ -20,7 +20,6 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
-import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 
 public class PathResolverImplTest {
@@ -74,7 +73,7 @@ public class PathResolverImplTest {
 	sensorContext = SensorContextTester.create(new File(parentPath));
 	sensorContext.settings().setProperty("path key", "existing.ts");
 
-	final DefaultInputFile file = TestInputFileBuilder.create("bla", "existing.ts").setLanguage(EsLintLanguage.LANGUAGE_KEY).build();
+	final DefaultInputFile file = new DefaultInputFile("bla", "existing.ts").setLanguage(EsLintLanguage.LANGUAGE_KEY);
 
 	sensorContext.fileSystem().add(file);
 
